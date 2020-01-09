@@ -28,6 +28,27 @@ chown "${AFP_USER}" /media/timemachine
 
 sed -i'' -e "s,%USER%,${AFP_USER:-},g" /etc/afp.conf
 
+SEDEX="s/; share vol size limit =/vol size limit = ""$SHARE_SIZE_LIMIT""/g"
+if [[ $SHARE_SIZE_LIMIT =~ ^[0-9]+$ ]] ; then
+  cat /etc/afp.conf | \
+  sed -E "$SEDEX" > /tmp/afpout
+else
+  echo "SHARE_SIZE_LIMIT isn't number"
+  cp /etc/afp.conf /tmp/afpout
+fi
+
+SEDEX="s/; timemachine vol size limit =/vol size limit = ""$TIMEMACHINE_SIZE_LIMIT""/g"
+
+if [[ $TIMEMACHINE_SIZE_LIMIT =~ ^[0-9]+$ ]] ; then
+  cat /tmp/afpout | \
+  sed -E "$SEDEX" > /etc/afp.conf
+else
+  echo "SHARE_SIZE_LIMIT isn't number"
+  cp /tmp/afpout /etc/afp.conf
+fi
+
+rm -f /tmp/afpout
+
 echo ---begin-afp.conf--
 cat /etc/afp.conf
 echo ---end---afp.conf--
