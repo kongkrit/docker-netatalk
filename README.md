@@ -50,6 +50,7 @@ To setup access credentials you should supply the following environment variable
 |AFP_GID               | _gid_ of the created user
 |SHARE_SIZE_LIMIT      | reported size (in MiB) of share folder. see [vol size limit](http://netatalk.sourceforge.net/3.1/htmldocs/afp.conf.5.html)
 |TIMEMACHINE_SIZE_LIMIT| reported size (in MiB) of time machine folder
+|AVAHI                 | set to 1 to enable avahi daemon. see below.
 
 #### Example
 
